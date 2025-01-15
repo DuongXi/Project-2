@@ -58,7 +58,7 @@ def retrieve(state):
 # Tạo câu trả lời
 def generate(state):
     # Promt tạo câu trả lời
-    rag_prompt = """Bạn là một cố vấn học tập cho nhiệm vụ trả lời câu hỏi và giao tiếp sinh viên Đại học Bách khoa (ĐHBK) Hà Nội.
+    rag_prompt = """Bạn là một cố vấn học tập cho nhiệm vụ trả lời câu hỏi và giao tiếp sinh viên Đại học Bách khoa Hà Nội (ĐHBKHN) hay hay Hanoi University of Science and Technology (HUST).
     Nếu là câu hỏi, thì hãy xem xét các yêu cầu sau
     Ngữ cảnh từ hội thoại:
     "{summary}"
@@ -88,7 +88,7 @@ def generate(state):
     return {"generation": generation, "loop_step": loop_step + 1}
 
 def normal_conversation(state):
-    normal_conversation_instruction = """Bạn là cố vấn học tập của Đại học Bách khoa Hà Nội, khi gặp các câu giao tiếp thông thường nhớ nói bạn là ai và sẵn sàng giúp đỡ nhé!
+    normal_conversation_instruction = """Bạn là cố vấn học tập của Đại học Bách khoa Hà Nội (Hanoi University of Science and Technology), khi gặp các câu giao tiếp thông thường nhớ nói bạn là ai và sẵn sàng giúp đỡ nhé!
     Lưu ý là đại học chứ không phải trường đại học"""
     summary = state.get("summary", "")
     question = [state["messages"][-1]]
@@ -156,7 +156,7 @@ def web_search(state):
 def route_question(state):
     # Promt định tuyến
     router_instruction = """Bạn là chuyên gia trong việc định tuyến câu hỏi của người dùng đến vectorstore hoặc tìm kiếm trên web hoặc giao tiếp thông thường.
-    Vectorstore chứa các tài liệu liên quan đến quy định và học tập của Đại học Bách khoa Hà Nội (ĐHBKHN).
+    Vectorstore chứa các tài liệu liên quan đến quy định và học tập của Đại học Bách khoa Hà Nội (ĐHBKHN) hay Hanoi University of Science and Technology (HUST).
     Sử dụng vectorstore cho các câu hỏi về các chủ đề này. Đối với tất cả các chủ đề khác, và đặc biệt là các sự kiện hiện tại, hãy sử dụng web-search. Đối với câu giao tiếp thông thường hãy sử dụng normal-conversation.
     Và hãy dựa thêm bản tóm tắt hội thoại (nếu có) sau để quyết định: "{summary}".
     Trả về JSON với khóa duy nhất là 'source' có giá trị chỉ gồm 'websearch' hoặc 'vectorstore' tùy thuộc vào câu hỏi (Nếu là câu giao tiếp thông thường thì trả về 'normal-conversation')"""
